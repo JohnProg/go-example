@@ -1,0 +1,7 @@
+{{ define "todo-list" }}
+	<ul class="list-group">
+          {{ range $key, $value := . }}
+            <li class="list-group-item">{{ $value.FirstName}}</li>
+          {{ end }}
+      </ul>
+{{ end }}

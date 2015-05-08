@@ -1,0 +1,78 @@
+{{ define "base" }}
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Title </title>
+		
+		{{ template "styles" }}
+
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		
+		<div class="container">
+			<div class="message"></div>
+			<form action="" method="POST" role="form" class="col-sm-4" action="/" enctype="multipart/form-data">
+				<div class="page-header">
+					<h2>Registrar usuario</h2>
+				</div>
+
+				<div class="form-group">
+					<label for="">Nombre</label>
+					<input type="text" required autofocus name="firstName" class="form-control" id="" placeholder="Ingrese Nombre">
+				</div>
+				<div class="form-group">
+					<label for="">Apellido</label>
+					<input type="text" required class="form-control" id="" name="lastName"placeholder="Ingrese Apellido">
+				</div>
+				<div class="form-group">
+					<label for="">Edad</label>
+					<input type="number" required name="edad" class="form-control" id="" placeholder="Ingrese Edad">
+				</div>
+				<div class="form-group">
+					<label for="">Avatar</label>
+					<input type="file" required name="avatar" class="form-control" id="" placeholder="Ingrese Edad">
+				</div>
+				<button type="submit" class="btn btn-primary">Guardar</button>
+			</form>
+			<section class="col-sm-6">
+				{{ if . }}
+				<div class="page-header">
+				  <h1>Usuarios </h1>
+				</div>
+				{{ end }}
+				<ul class="list-group">
+				    {{ range $key, $value := . }}
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-sm-2">
+								<img src="/static/images/{{ $value.Avatar }}" alt="{{ $value.FirstName }}" width="80" class="image-responsive">
+							</div>
+							<div class="col-sm-9">
+								Nombre: {{ $value.FirstName}} <br>
+								Apellido: {{ $value.LastName}} <br> 
+								Edad: {{ $value.Edad}} años
+							</div>
+							<div class="col-sm-1">
+								<a href="/eliminar?i={{$key}}" title="eliminar" class="pull-right">Eliminar</a>
+							</div>
+						</div>
+					</li>
+				    {{ end }}
+				</ul>
+			</section>
+    	</div>
+
+		{{ template "scripts" }}
+
+	</body>
+</html>
+{{ end }}
