@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"path"
+	"path/filepath"
 )
 
 type User struct {
@@ -20,6 +22,8 @@ var i int
 var templates = template.Must(template.ParseGlob("templates/*"))
 
 func TodoMainHandler(res http.ResponseWriter, req *http.Request) {
+	basedir, _ := filepath.Abs(filepath.Dir("."))
+
 	if req.Method == "POST" {
 		firstName := req.FormValue("firstName")
 		lastName := req.FormValue("lastName")
@@ -34,7 +38,8 @@ func TodoMainHandler(res http.ResponseWriter, req *http.Request) {
 			return
 		}
 
-		dst, err := os.Create("/Users/johnmachahuay/Documents/programming/go/src/github.com/JohnProg/ex-web1/static/images/" + files[0].Filename)
+		dst, err := os.Create(path.Join(basedir, "static/images", files[0].Filename))
+
 		defer dst.Close()
 		if err != nil {
 			http.Error(res, err.Error(), http.StatusInternalServerError)
